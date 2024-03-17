@@ -30,7 +30,7 @@ public class ModMenuState extends GameState {
         doneButton.setText("Done");
         doneButton.vAnchor= VerticalAnchor.BOTTOM_ALIGNED;
         doneButton.show();
-
+        this.uiElements.add(doneButton);
         UIElement configButton = new UIElement(0.0F, -20.0F, 150.0F, 30.0F) {
             public void onClick() {
                 super.onClick();

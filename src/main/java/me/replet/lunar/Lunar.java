@@ -14,8 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static me.replet.lunar.api.resources.LoadAssetAPI.LoadAsset;
+
 public class Lunar implements ClientModInitializer {
 
+    private static boolean gameLoaded =false;
     public static Map<String, ConfigScreenFactory<?>> configScreenFactories = new HashMap<>();
     public static List<Map<String, ConfigScreenFactory<?>>> delayedScreenFactoryProviders = new ArrayList<>();
 
@@ -44,5 +47,12 @@ public class Lunar implements ClientModInitializer {
                 Log.error(LogCategory.LOG,"Mod {} provides a broken implementation of ModMenuApi", modId, e);
             }
         });
+    }
+
+    public static void setGameLoaded() {
+        gameLoaded = true;
+    }
+    public static boolean HasGameLoaded(){
+        return gameLoaded;
     }
 }

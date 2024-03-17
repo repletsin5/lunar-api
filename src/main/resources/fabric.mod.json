@@ -9,7 +9,9 @@
     "repo": ""
   },
   "mixins": [
-    "lunar-api.gamestate.mixins.json"
+    "lunar-api.gamestate.mixins.json",
+    "lunar-api.resources.mixins.json",
+    "lunar-api.core.mixins.json"
   ],
   "license": "BSD-3-Clause",
   "icon": "assets/lunartextiles/icon.png",
