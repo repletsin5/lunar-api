@@ -1,0 +1,21 @@
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        mavenLocal()
+    }
+}
+
+rootProject.name = 'lunar-api'
+include 'lunar-api-bom'
+include 'lunar-api-catalog'
+
+include 'lunar-api-base'
+
+include 'lunar-api-ui-v0'
+
+

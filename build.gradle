@@ -1,0 +1,127 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id "eclipse"
+    id "idea"
+    id "de.undercouch.download" version "5.6.0"
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+version = project.mod_version
+group = project.maven_group
+
+
+
+
+base {
+    archivesName = "$mod_name-CR-$cosmicreach_version"
+}
+
+
+
+    group = "me.replet.lunar-api"
+    apply plugin: "maven-publish"
+    apply plugin: "java-library"
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://jitpack.io'
+        }
+        maven {
+            url "https://repo.spongepowered.org/maven/"
+        }
+        maven {
+            url "https://maven.fabricmc.net/"
+        }
+    }
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 17
+    }
+    java {
+        withSourcesJar()
+    }
+
+    dependencies {
+        implementation fileTree(dir: "${project(":").projectDir}/run/", include: ['*.jar'])
+        implementation fileTree(dir: "${project(":").projectDir}/run/deps", include: ['*.jar'])
+        api "net.fabricmc:fabric-loader:${project.loader_version}"
+        api "net.fabricmc:access-widener:2.1.0"
+
+        // Mixin dependencies
+        api "org.ow2.asm:asm:${asm_version}"
+        api "org.ow2.asm:asm-analysis:${asm_version}"
+        api "org.ow2.asm:asm-commons:${asm_version}"
+        api "org.ow2.asm:asm-tree:${asm_version}"
+        api "org.ow2.asm:asm-util:${asm_version}"
+        api("net.fabricmc:sponge-mixin:${mixin_version}") {
+            exclude module: 'launchwrapper'
+            exclude group: 'com.google.guava'
+            exclude group: 'com.google.code.gson'
+        }
+        api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
+    }
+    tasks.withType(AbstractArchiveTask).configureEach {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+
+
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "loader_version", project.loader_version
+    inputs.property "cosmicreach_version", project.cosmicreach_version
+    inputs.property "mod_name", project.mod_name
+    inputs.property "modid", project.modid
+    filteringCharset "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+                "loader_version": project.loader_version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    // ensure that the encoding is set to UTF-8, no matter what the system default is
+    // this fixes some edge cases with special characters not displaying correctly
+    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+    // If Javadoc is generated, this must be specified in that task too.
+    it.options.encoding = "UTF-8"
+    it.options.release = 17
+}
+
+tasks.register('buildAndCopy', Copy) {
+    group 'build'
+    dependsOn 'assemble'
+    from "build/libs/"
+    into "run/mods"
+}
+
+tasks.register('downloadModLoader', Download) {
+    group 'fabric'
+    src "https://github.com/ForwarD-NerN/CosmicReach-Mod-Loader/releases/download/latest/cosmicreach-fabric-modloader.zip"
+    dest "run/"
+}
+
+
+tasks.register('setupEnvironment', Copy) {
+    group 'fabric'
+    dependsOn downloadModLoader
+
+    from zipTree(file(new File("run/cosmicreach-fabric-modloader.zip")))
+    into "run/"
+    exclude("launch.sh", "launch.bat")
+
+    doLast {
+        var gameJar = fileTree("${project.rootDir}/run/").filter { file ->
+            return file.name.startsWith("Cosmic Reach-")
+        }
+        if(!gameJar.getFiles().isEmpty()) {
+            gameJar.getSingleFile().renameTo("run/cosmic-reach.jar")
+        }
+        delete("run/cosmicreach-fabric-modloader.zip")
+    }
+}

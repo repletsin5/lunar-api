@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.replet.lunar.mixins.gamestate",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MenuStateMixin",
+    "UIElementAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "lunar-api",
+  "version": "${version}",
+  "name": "Lunar API",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": ""
+  },
+  "mixins": [
+    "lunar-api.gamestate.mixins.json"
+  ],
+  "license": "BSD-3-Clause",
+  "icon": "assets/lunartextiles/icon.png",
+  "entrypoints": {
+    "client": [
+      "me.replet.lunar.Lunar"
+    ],
+    "modmenu": [
+      "me.replet.lunar.ModsScreenCompat"
+    ]
+  },
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.7",
+    "cosmic_reach": ">=0.1.7"
+  }
+}
