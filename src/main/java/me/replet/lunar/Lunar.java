@@ -1,9 +1,8 @@
 package me.replet.lunar;
 
 import finalforeach.cosmicreach.gamestates.GameState;
-import me.replet.lunar.api.Blocks.BlocksRegistry;
-import me.replet.lunar.api.Blocks.ModBlock;
-import me.replet.lunar.api.Blocks.ModBlocks;
+import me.replet.lunar.api.blocks.BlocksRegistry;
+import me.replet.lunar.api.blocks.ModBlock;
 import me.replet.lunar.api.modmenu.ConfigScreenFactory;
 import me.replet.lunar.api.modmenu.ModConfigButtonAPI;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static me.replet.lunar.api.Blocks.BlockEvents.AFTER_BLOCK_BREAK;
+import static me.replet.lunar.api.blocks.BlockEvents.AFTER_BLOCK_BREAK;
 
 
 public class Lunar implements ClientModInitializer {
@@ -51,10 +50,10 @@ public class Lunar implements ClientModInitializer {
                 Log.error(LogCategory.LOG,"Mod {} provides a broken implementation of ModMenuApi", modId, e);
             }
         });
-        BlocksRegistry.Register("lunar-api","Reinforced Glass",new ModBlock());
-        AFTER_BLOCK_BREAK.register(((world, pos, timeSinceLastInteract) -> {
-                Log.info(LogCategory.LOG,"Broke block at %d,%d,%d",pos.getGlobalX(),pos.getGlobalY(),pos.getGlobalZ());
-        }));
+        //BlocksRegistry.Register("lunar-api","Reinforced Glass",new ModBlock());
+        //AFTER_BLOCK_BREAK.register(((world, pos, timeSinceLastInteract) -> {
+        //        Log.info(LogCategory.LOG,"Broke block at %d,%d,%d",pos.getGlobalX(),pos.getGlobalY(),pos.getGlobalZ());
+        //}));
     }
 
     public static void setGameLoaded() {

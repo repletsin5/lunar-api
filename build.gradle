@@ -16,7 +16,7 @@ group = project.maven_group
 
 
 base {
-    archivesName = "$mod_name-CR-$cosmicreach_version"
+    archivesName = "$mod_name"
 }
 
 

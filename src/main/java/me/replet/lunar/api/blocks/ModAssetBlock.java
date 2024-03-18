@@ -1,6 +1,5 @@
-package me.replet.lunar.api.Blocks;
+package me.replet.lunar.api.blocks;
 
-import com.badlogic.gdx.files.FileHandle;
 import me.replet.lunar.api.resources.ModAsset;
 
 public class ModAssetBlock {

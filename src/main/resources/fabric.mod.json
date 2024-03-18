@@ -3,10 +3,12 @@
   "id": "lunar-api",
   "version": "${version}",
   "name": "Lunar API",
-  "description": "",
-  "authors": [],
+  "description": "A basic Modding API for Cosmic Reach",
+  "authors": [
+    "repletsin5"
+  ],
   "contact": {
-    "repo": ""
+    "repo": "https://github.com/repletsin5/lunar-api"
   },
   "mixins": [
     "lunar-api.gamestate.mixins.json",

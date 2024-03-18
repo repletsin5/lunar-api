@@ -1,4 +1,4 @@
-package me.replet.lunar.api.Blocks;
+package me.replet.lunar.api.blocks;
 
 import com.badlogic.gdx.utils.Array;
 import finalforeach.cosmicreach.world.blocks.Block;

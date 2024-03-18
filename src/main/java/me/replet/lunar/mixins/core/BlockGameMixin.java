@@ -2,14 +2,13 @@ package me.replet.lunar.mixins.core;
 
 import com.esotericsoftware.minlog.Log;
 import finalforeach.cosmicreach.BlockGame;
-import net.fabricmc.loader.impl.util.log.LogHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static me.replet.lunar.Lunar.setGameLoaded;
-import static me.replet.lunar.api.Blocks.BlocksRegistry.UseBlockQueue;
+import static me.replet.lunar.api.blocks.BlocksRegistry.UseBlockQueue;
 import static me.replet.lunar.api.resources.LoadAssetAPI.UseAssetQueue;
 
 @Mixin(BlockGame.class)

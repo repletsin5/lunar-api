@@ -1,14 +1,16 @@
-package me.replet.lunar.api.Blocks;
+package me.replet.lunar.api.blocks;
 
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import finalforeach.cosmicreach.GameAssetLoader;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import finalforeach.cosmicreach.world.blocks.Block;
 import finalforeach.cosmicreach.world.blocks.BlockState;
+import jdk.jshell.spi.ExecutionControl;
 import me.replet.lunar.api.resources.LoadAssetAPI;
 import me.replet.lunar.api.resources.ModAsset;
 
+import java.io.UncheckedIOException;
 import java.util.*;
 
 import static finalforeach.cosmicreach.GameAssetLoader.loadAsset;
@@ -30,26 +32,30 @@ public class BlocksRegistry {
         });
     }
 
-
-    public static ModBlock Register(String modID,String name,ModBlock mblock){
-        if(RegisteredBlocks.Contains(mblock)){
-           return mblock;
-        }
-        if(Blocks.Contains(mblock)){
-            if(mblock.block!=null) {
-                RegisteredBlocks.Add(mblock);
-                allBlocks.add(mblock.block);
+    @SuppressWarnings("all")
+    public static ModBlock Register(String modID,String name,ModBlock mblock)  {
+        if(modID!="0(((($(&&$$$^^^"){//hacky fix for 'unreachable code'
+            throw new UncheckedExecutionException("Register Does not work currently!!!!!!", new Throwable());
+        }else {
+            if (RegisteredBlocks.Contains(mblock)) {
+                return mblock;
             }
+            if (Blocks.Contains(mblock)) {
+                if (mblock.block != null) {
+                    RegisteredBlocks.Add(mblock);
+                    allBlocks.add(mblock.block);
+                }
+                return mblock;
+            }
+
+            String id = name.toLowerCase(Locale.ROOT).replaceAll("\\s+", "_");
+            mblock = CreateBlock(modID, id, name);
+            if (mblock.block == null)
+                return mblock;
+            RegisteredBlocks.Add(mblock);
+            allBlocks.add(mblock.block);
             return mblock;
         }
-
-        String id = name.toLowerCase(Locale.ROOT).replaceAll("\\s+","_");
-        mblock = CreateBlock(modID,id,name);
-        if(mblock.block==null)
-            return mblock;
-        RegisteredBlocks.Add(mblock);
-        allBlocks.add(mblock.block);
-        return mblock;
     }
     public static Block LoadBlockFromJsonByID(String modID,String blockID){
         Json json = new Json();
