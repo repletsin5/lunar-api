@@ -17,15 +17,19 @@ public class LoadAssetAPI {
         for(var a : assetQueue){
            a.handle = loadAsset(a.asset);
         }
+    }public static ModAsset LoadAsset(String modID,String path){
+        return LoadAsset(modID,path, true);
     }
-    public static ModAsset LoadAsset(String modID,String path){
+    public static ModAsset LoadAsset(String modID,String path,boolean addToQueue){
         String key = modID + ASSET_KEY + path;
        if(HasGameLoaded())
           return new ModAsset(loadAsset(key),key);
        else {
            ModAsset modAsset = new ModAsset(null, key);
-           assetQueue.add(modAsset);
+           if(!addToQueue)
+               assetQueue.add(modAsset);
            return modAsset;
+
        }
     }
 

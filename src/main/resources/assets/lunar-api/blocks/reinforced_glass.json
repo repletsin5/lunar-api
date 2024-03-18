@@ -1,0 +1,14 @@
+{
+    "stringId": "lunar-api:reinforced_glass",
+    "blockStates":
+    {
+        "default": 
+        {
+            "modelName": "model_glass",
+            "isOpaque": false,
+            "isTransparent": true,
+            "lightAttenuation": 0,
+            "generateSlabs": true
+        }
+    }
+}
