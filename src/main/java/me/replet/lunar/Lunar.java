@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static me.replet.lunar.api.Blocks.BlockEvents.AFTER_BLOCK_BREAK;
+
 
 public class Lunar implements ClientModInitializer {
 
@@ -50,6 +52,9 @@ public class Lunar implements ClientModInitializer {
             }
         });
         BlocksRegistry.Register("lunar-api","Reinforced Glass",new ModBlock());
+        AFTER_BLOCK_BREAK.register(((world, pos, timeSinceLastInteract) -> {
+                Log.info(LogCategory.LOG,"Broke block at %d,%d,%d",pos.getGlobalX(),pos.getGlobalY(),pos.getGlobalZ());
+        }));
     }
 
     public static void setGameLoaded() {
