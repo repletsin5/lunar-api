@@ -26,7 +26,7 @@ public class LoadAssetAPI {
           return new ModAsset(loadAsset(key),key);
        else {
            ModAsset modAsset = new ModAsset(null, key);
-           if(!addToQueue)
+           if(addToQueue)
                assetQueue.add(modAsset);
            return modAsset;
 

@@ -51,9 +51,9 @@ public class Lunar implements ClientModInitializer {
             }
         });
         //BlocksRegistry.Register("lunar-api","Reinforced Glass",new ModBlock());
-        //AFTER_BLOCK_BREAK.register(((world, pos, timeSinceLastInteract) -> {
+        //AFTER_BLOCK_BREAK.register((world, pos, timeSinceLastInteract) -> {
         //        Log.info(LogCategory.LOG,"Broke block at %d,%d,%d",pos.getGlobalX(),pos.getGlobalY(),pos.getGlobalZ());
-        //}));
+        //});
     }
 
     public static void setGameLoaded() {
