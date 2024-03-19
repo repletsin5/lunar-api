@@ -4,6 +4,8 @@ plugins {
     id "eclipse"
     id "idea"
     id "de.undercouch.download" version "5.6.0"
+    id 'signing'
+
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -21,7 +23,7 @@ base {
 
 
 
-    group = "me.replet.lunar-api"
+    group = "com.github.repletsin5"
     apply plugin: "maven-publish"
     apply plugin: "java-library"
 
@@ -63,6 +65,7 @@ base {
         }
         api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
     }
+
     tasks.withType(AbstractArchiveTask).configureEach {
         preserveFileTimestamps = false
         reproducibleFileOrder = true
@@ -124,4 +127,54 @@ tasks.register('setupEnvironment', Copy) {
         }
         delete("run/cosmicreach-fabric-modloader.zip")
     }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'lunar-api'
+            from components.java
+            pom {
+                name = 'Lunar API'
+                description = 'A basic Modding API for Cosmic Reach'
+                url = 'https://github.com/repletsin5/lunar-api'
+                licenses {
+                    license {
+                        name = ' BSD-3-Clause license'
+                        url = 'https://opensource.org/license/bsd-3-clause'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'repletsin5'
+                    }
+                }
+                scm {
+                    connection = 'scm:git@github.com:repletsin5/lunar-api.git'
+                    developerConnection = 'scm:git@github.com:repletsin5/lunar-api.git'
+                    url = 'https://github.com/repletsin5/lunar-api'
+                }
+            }
+            repositories {
+                maven {
+                    name ="ossrh"
+
+                    url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                }
+            }
+        }
+
+    }
+}
+
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications
 }

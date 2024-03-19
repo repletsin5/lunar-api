@@ -1,12 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.github.repletsin5.lunar.mixins.core",
+  "package": "com.github.repletsin5.lunar.mixins.rendering",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BlockGameMixin",
-    "BlockSelectionMixin",
-    "BlockModelJsonMixin"
+    "shaders.GameShaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

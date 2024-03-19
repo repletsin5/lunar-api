@@ -13,16 +13,17 @@
   "mixins": [
     "lunar-api.gamestate.mixins.json",
     "lunar-api.resources.mixins.json",
-    "lunar-api.core.mixins.json"
+    "lunar-api.core.mixins.json",
+    "lunar-api.rendering.mixins.json"
   ],
   "license": "BSD-3-Clause",
   "icon": "assets/lunartextiles/icon.png",
   "entrypoints": {
     "client": [
-      "me.replet.lunar.Lunar"
+      "com.github.repletsin5.lunar.Lunar"
     ],
     "modmenu": [
-      "me.replet.lunar.ModsScreenCompat"
+      "com.github.repletsin5.lunar.ModsScreenCompat"
     ]
   },
   "environment": "*",
