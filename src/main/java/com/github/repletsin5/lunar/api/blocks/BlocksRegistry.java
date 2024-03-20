@@ -11,10 +11,9 @@ import com.github.repletsin5.lunar.api.resources.ModAsset;
 import java.util.*;
 
 import static finalforeach.cosmicreach.GameAssetLoader.loadAsset;
-import static finalforeach.cosmicreach.world.blocks.Block.allBlockStates;
-import static finalforeach.cosmicreach.world.blocks.Block.allBlocks;
 import static com.github.repletsin5.lunar.Lunar.hasGameLoaded;
 import static com.github.repletsin5.lunar.api.resources.LoadAssetAPI.ASSET_KEY;
+import static finalforeach.cosmicreach.world.blocks.Block.*;
 
 public class BlocksRegistry {
     private static final ModBlocks blocks = new ModBlocks();
@@ -25,6 +24,7 @@ public class BlocksRegistry {
         blockQueue.forEach(item -> {
             Block b = loadBlockFromJsonByPath(item.getKey().asset.asset);
             item.getKey().block.block = b;
+            blocksByStringId.put(b.getStringId(),b);
         });
     }
 
@@ -48,6 +48,7 @@ public class BlocksRegistry {
                 return mblock;
             registeredBlocks.add(mblock);
             allBlocks.add(mblock.block);
+            blocksByStringId.put(mblock.block.getStringId(),mblock.block);
             return mblock;
     }
 

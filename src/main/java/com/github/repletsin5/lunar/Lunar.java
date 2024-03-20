@@ -49,7 +49,7 @@ public class Lunar implements ClientModInitializer {
                 Log.error(LogCategory.LOG,"Mod {} provides a broken implementation of ModMenuApi", modId, e);
             }
         });
-        BlocksRegistry.register("lunar-api","Reinforced Glass",new ModBlock());
+        //BlocksRegistry.register("lunar-api","Reinforced Glass",new ModBlock());
         //AFTER_BLOCK_BREAK.register((world, pos, timeSinceLastInteract) -> {
         //        Log.info(LogCategory.LOG,"Broke block at %d,%d,%d",pos.getGlobalX(),pos.getGlobalY(),pos.getGlobalZ());
         //});

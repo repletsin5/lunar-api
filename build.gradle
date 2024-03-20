@@ -94,6 +94,8 @@ tasks.register('buildAndCopy', Copy) {
     group 'build'
     dependsOn 'assemble'
     from "build/libs/"
+    exclude( '*-sources.jar')
+    include( '*.jar')
     into "run/mods"
 }
 

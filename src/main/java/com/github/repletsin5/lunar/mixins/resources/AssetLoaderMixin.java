@@ -35,7 +35,7 @@ public class AssetLoaderMixin {
 
         if (arr != null) {
             if (arr.length==2) {
-                if (arr[0] == "base") {
+                if (arr[0].toLowerCase().equals("base")) {
                     if (!forceReload && ALL_ASSETS.containsKey(arr[1]))
                         cir.setReturnValue(ALL_ASSETS.get(arr[1]));
 
@@ -62,10 +62,10 @@ public class AssetLoaderMixin {
            String b = a.replace(ASSET_KEY,":");
            s = "Loading " + b;
         } else {
-            if (s.contains("mods/assets")) {
+            if (s.startsWith("mods/assets")) {
                 s = "Loading " + "DataMods:" + a;
             } else {
-                s = "Loading " + "Base:" + a;
+                s = "Loading " + "base:" + a;
             }
         }
 
