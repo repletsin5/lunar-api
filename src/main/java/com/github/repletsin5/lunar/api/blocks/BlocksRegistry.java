@@ -28,11 +28,8 @@ public class BlocksRegistry {
         });
     }
 
-    //@SuppressWarnings("all")
     public static ModBlock register(String modID, String name, ModBlock mblock)  {
-        //if(modID!="0(((($(&&$$$^^^"){//hacky fix for 'unreachable code'
-        //    throw new UncheckedExecutionException("Register Does not work currently!!!!!!", new Throwable());
-        //}else {
+
             if (registeredBlocks.contains(mblock)) {
                 return mblock;
             }
@@ -52,7 +49,6 @@ public class BlocksRegistry {
             registeredBlocks.add(mblock);
             allBlocks.add(mblock.block);
             return mblock;
-        //}
     }
 
     public static Block loadBlockFromJsonByID(String modID, String blockID) {
@@ -63,7 +59,7 @@ public class BlocksRegistry {
         BlockState blockState;
         for (Array.ArrayIterator var4 = blockStateKeysToAdd.iterator(); var4.hasNext(); allBlockStates.put(blockState.stringId, blockState)) {
             String stateKey = (String)var4.next();
-            blockState = (BlockState)b.blockStates.get(stateKey);
+            blockState = b.blockStates.get(stateKey);
             blockState.initialize(b);
             blockState.stringId = stateKey;
             if (blockState.generateSlabs) {
@@ -81,7 +77,7 @@ public class BlocksRegistry {
         BlockState blockState;
         for (Array.ArrayIterator var4 = blockStateKeysToAdd.iterator(); var4.hasNext(); allBlockStates.put(blockState.stringId, blockState)) {
             String stateKey = (String)var4.next();
-            blockState = (BlockState)b.blockStates.get(stateKey);
+            blockState = b.blockStates.get(stateKey);
             blockState.initialize(b);
             blockState.stringId = stateKey;
             if (blockState.generateSlabs) {

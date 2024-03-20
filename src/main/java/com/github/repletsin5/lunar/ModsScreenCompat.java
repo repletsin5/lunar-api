@@ -15,6 +15,6 @@ public class ModsScreenCompat implements ModConfigButtonAPI {
 
     @Override
     public Map<String, ConfigScreenFactory<?>> getProvidedConfigScreenFactories() {
-        return ImmutableMap.of("cosmic_reach", parent -> new OptionsMenu(parent));
+        return ImmutableMap.of("cosmic_reach", OptionsMenu::new);
     }
 }

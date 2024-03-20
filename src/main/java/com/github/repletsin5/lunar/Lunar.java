@@ -20,13 +20,13 @@ public class Lunar implements ClientModInitializer {
     public static Map<String, ConfigScreenFactory<?>> configScreenFactories = new HashMap<>();
     public static List<Map<String, ConfigScreenFactory<?>>> delayedScreenFactoryProviders = new ArrayList<>();
 
-    public static GameState getConfigScreen(String modid, GameState menuScreen) {
+    public static GameState getConfigScreen(String modID, GameState menuScreen) {
         if (!delayedScreenFactoryProviders.isEmpty()) {
             delayedScreenFactoryProviders.forEach(map -> map.forEach(configScreenFactories::putIfAbsent));
             delayedScreenFactoryProviders.clear();
         }
 
-        ConfigScreenFactory<?> factory = configScreenFactories.get(modid);
+        ConfigScreenFactory<?> factory = configScreenFactories.get(modID);
         if (factory != null) {
             return factory.create(menuScreen);
         }

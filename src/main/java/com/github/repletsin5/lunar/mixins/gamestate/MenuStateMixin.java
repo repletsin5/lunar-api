@@ -12,6 +12,7 @@ import finalforeach.cosmicreach.ui.UIElement;
 import finalforeach.cosmicreach.ui.VerticalAnchor;
 import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -20,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(finalforeach.cosmicreach.gamestates.MainMenu.class)
 public abstract class MenuStateMixin extends GameState {
     private static final String fabricV = FabricLoader.getInstance().getModContainer("fabricloader").get().getMetadata().getVersion().getFriendlyString();
+    @Unique
     private static Vector2 pos = new Vector2();
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/ui/FontRenderer;getTextDimensions(Lcom/badlogic/gdx/utils/viewport/Viewport;Ljava/lang/String;Lcom/badlogic/gdx/math/Vector2;)Lcom/badlogic/gdx/math/Vector2;", ordinal = 2), remap = false)
