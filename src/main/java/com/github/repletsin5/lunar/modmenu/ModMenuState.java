@@ -15,10 +15,10 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public class ModMenuState extends GameState {
     GameState previousState;
-    String selectedID="";
-    GameState selectedConfig=null;
-    public ModMenuState(final GameState previousState){
+    String selectedID = "";
+    GameState selectedConfig = null;
 
+    public ModMenuState(final GameState previousState) {
         UIElement doneButton = new UIElement(0.0F, -20.0F, 150.0F, 30.0F) {
             public void onClick() {
                 super.onClick();
@@ -26,36 +26,36 @@ public class ModMenuState extends GameState {
             }
         };
         doneButton.setText("Done");
-        doneButton.vAnchor= VerticalAnchor.BOTTOM_ALIGNED;
+        doneButton.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;
         doneButton.show();
         this.uiElements.add(doneButton);
+
         UIElement configButton = new UIElement(0.0F, -20.0F, 150.0F, 30.0F) {
             public void onClick() {
                 super.onClick();
                 var a = this;
-                if(((UIElementAccessor)(Object)this).getShown()){
+                if(((UIElementAccessor)(Object)this).getShown()) {
                     var state = Lunar.getConfigScreen(selectedID,previousState);
-                    if(state != null)
+                    if (state != null)
                         GameState.switchToGameState(state);
                 }
             }
         };
         configButton.setText("Configure");
-        configButton.vAnchor= VerticalAnchor.BOTTOM_ALIGNED;
-        configButton.hAnchor= HorizontalAnchor.LEFT_ALIGNED;
-
+        configButton.vAnchor = VerticalAnchor.BOTTOM_ALIGNED;
+        configButton.hAnchor = HorizontalAnchor.LEFT_ALIGNED;
         configButton.hide();
         this.uiElements.add(configButton);
+
         float yStart = 8.0F;
-        for(var mod : FabricLoader.getInstance().getAllMods()){
+        for (var mod : FabricLoader.getInstance().getAllMods()) {
             String text = mod.getMetadata().getName() + " - " + mod.getMetadata().getVersion().getFriendlyString();
 
             UIElement element = new UIElement(0F, yStart, 350f, 28.0F) {
                 public void onClick() {
                     super.onClick();
-                    selectedID=mod.getMetadata().getId();
+                    selectedID = mod.getMetadata().getId();
                     if(Lunar.configScreenFactories.containsKey(mod.getMetadata().getId()))
-
                         configButton.show();
                     else {
                         if (Lunar.delayedScreenFactoryProviders.stream().anyMatch(obj -> obj.containsKey(mod.getMetadata().getId())))
@@ -64,15 +64,15 @@ public class ModMenuState extends GameState {
                             configButton.hide();
                     }}
             };
-            element.hAnchor=HorizontalAnchor.LEFT_ALIGNED;
-            element.vAnchor=VerticalAnchor.TOP_ALIGNED;
+            element.hAnchor = HorizontalAnchor.LEFT_ALIGNED;
+            element.vAnchor = VerticalAnchor.TOP_ALIGNED;
             element.setText(text);
             element.show();
             this.uiElements.add(element);
             yStart += 28.0F;
-
         }
     }
+
     public void render() {
         super.render();
         ScreenUtils.clear(0.145F, 0.078F, 0.153F, 1.0F, true);
@@ -90,8 +90,8 @@ public class ModMenuState extends GameState {
         Vector2 pos = new Vector2();
         batch.setProjectionMatrix(this.uiCamera.combined);
         batch.begin();
-        for(var mod : FabricLoader.getInstance().getAllMods()){
-            if(mod.getMetadata().getId()==selectedID) {
+        for (var mod : FabricLoader.getInstance().getAllMods()) {
+            if (mod.getMetadata().getId() == selectedID) {
                 yStart += pos.y + 4.0F;
                 String text = mod.getMetadata().getDescription();
                 FontRenderer.getTextDimensions(this.uiViewport, text, pos);

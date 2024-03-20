@@ -5,7 +5,6 @@ plugins {
     id "idea"
     id "de.undercouch.download" version "5.6.0"
     id 'signing'
-
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -14,64 +13,59 @@ targetCompatibility = JavaVersion.VERSION_17
 version = project.mod_version
 group = project.maven_group
 
-
-
-
 base {
     archivesName = "$mod_name"
 }
 
+group = "com.github.repletsin5"
+apply plugin: "maven-publish"
+apply plugin: "java-library"
 
-
-    group = "com.github.repletsin5"
-    apply plugin: "maven-publish"
-    apply plugin: "java-library"
-
-    repositories {
-        mavenCentral()
-        maven {
-            url 'https://jitpack.io'
-        }
-        maven {
-            url "https://repo.spongepowered.org/maven/"
-        }
-        maven {
-            url "https://maven.fabricmc.net/"
-        }
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
     }
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 17
+    maven {
+        url "https://repo.spongepowered.org/maven/"
     }
-    java {
-        withSourcesJar()
+    maven {
+        url "https://maven.fabricmc.net/"
     }
+}
 
-    dependencies {
-        implementation fileTree(dir: "${project(":").projectDir}/run/", include: ['*.jar'])
-        implementation fileTree(dir: "${project(":").projectDir}/run/deps", include: ['*.jar'])
-        api "net.fabricmc:fabric-loader:${project.loader_version}"
-        api "net.fabricmc:access-widener:2.1.0"
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+}
 
-        // Mixin dependencies
-        api "org.ow2.asm:asm:${asm_version}"
-        api "org.ow2.asm:asm-analysis:${asm_version}"
-        api "org.ow2.asm:asm-commons:${asm_version}"
-        api "org.ow2.asm:asm-tree:${asm_version}"
-        api "org.ow2.asm:asm-util:${asm_version}"
-        api("net.fabricmc:sponge-mixin:${mixin_version}") {
-            exclude module: 'launchwrapper'
-            exclude group: 'com.google.guava'
-            exclude group: 'com.google.code.gson'
-        }
-        api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
+java {
+    withSourcesJar()
+}
+
+dependencies {
+    implementation fileTree(dir: "${project(":").projectDir}/run/", include: ['*.jar'])
+    implementation fileTree(dir: "${project(":").projectDir}/run/deps", include: ['*.jar'])
+    api "net.fabricmc:fabric-loader:${project.loader_version}"
+    api "net.fabricmc:access-widener:2.1.0"
+
+    // Mixin dependencies
+    api "org.ow2.asm:asm:${asm_version}"
+    api "org.ow2.asm:asm-analysis:${asm_version}"
+    api "org.ow2.asm:asm-commons:${asm_version}"
+    api "org.ow2.asm:asm-tree:${asm_version}"
+    api "org.ow2.asm:asm-util:${asm_version}"
+    api("net.fabricmc:sponge-mixin:${mixin_version}") {
+        exclude module: 'launchwrapper'
+        exclude group: 'com.google.guava'
+        exclude group: 'com.google.code.gson'
     }
+    api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
+}
 
-    tasks.withType(AbstractArchiveTask).configureEach {
-        preserveFileTimestamps = false
-        reproducibleFileOrder = true
-    }
-
-
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
 
 processResources {
     inputs.property "version", project.version
@@ -109,7 +103,6 @@ tasks.register('downloadModLoader', Download) {
     dest "run/"
 }
 
-
 tasks.register('setupEnvironment', Copy) {
     group 'fabric'
     dependsOn downloadModLoader
@@ -122,9 +115,11 @@ tasks.register('setupEnvironment', Copy) {
         var gameJar = fileTree("${project.rootDir}/run/").filter { file ->
             return file.name.startsWith("Cosmic Reach-")
         }
+
         if(!gameJar.getFiles().isEmpty()) {
             gameJar.getSingleFile().renameTo("run/cosmic-reach.jar")
         }
+
         delete("run/cosmicreach-fabric-modloader.zip")
     }
 }
@@ -134,31 +129,35 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId = 'lunar-api'
             from components.java
+
             pom {
                 name = 'Lunar API'
                 description = 'A basic Modding API for Cosmic Reach'
                 url = 'https://github.com/repletsin5/lunar-api'
+
                 licenses {
                     license {
                         name = ' BSD-3-Clause license'
                         url = 'https://opensource.org/license/bsd-3-clause'
                     }
                 }
+
                 developers {
                     developer {
                         id = 'repletsin5'
                     }
                 }
+
                 scm {
                     connection = 'scm:git@github.com:repletsin5/lunar-api.git'
                     developerConnection = 'scm:git@github.com:repletsin5/lunar-api.git'
                     url = 'https://github.com/repletsin5/lunar-api'
                 }
             }
+
             repositories {
                 maven {
-                    name ="ossrh"
-
+                    name = "ossrh"
                     url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
                 }
             }

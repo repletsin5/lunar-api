@@ -19,20 +19,20 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class EventFactory {
-
-    private static final Set<ArrayBackedEvent<?>> ARRAY_BACKED_EVENTS
-            = Collections.newSetFromMap(new MapMaker().weakKeys().makeMap());
+    private static final Set<ArrayBackedEvent<?>> ARRAY_BACKED_EVENTS = Collections.newSetFromMap(new MapMaker().weakKeys().makeMap());
 
     private EventFactory() { }
 
     public static void invalidate() {
         ARRAY_BACKED_EVENTS.forEach(ArrayBackedEvent::update);
     }
+
     public static <T> Event<T> createArrayBacked(Class<? super T> type, Function<T[], T> invokerFactory) {
         ArrayBackedEvent<T> event = new ArrayBackedEvent<>(type, invokerFactory);
         ARRAY_BACKED_EVENTS.add(event);
         return event;
     }
+
     private static <T> T buildEmptyInvoker(Class<T> handlerClass, Function<T[], T> invokerSetup) {
         // find the functional interface method
         Method funcIfMethod = null;
