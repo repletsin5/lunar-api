@@ -13,15 +13,15 @@ import static com.github.repletsin5.lunar.api.resources.LoadAssetAPI.ASSET_KEY;
 
 @Mixin(BlockModelJson.class)
 public class BlockModelJsonMixin {
-    @Redirect(method = "getInstance", at= @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
+    @Redirect(method = "getInstance", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
     private static FileHandle getModelFromModID(String fileName) {
-        String noFolder = fileName.replace("models/blocks/", "");
-        if (noFolder.contains(ASSET_KEY)) {
-            String[] split =  noFolder.split(Pattern.quote(ASSET_KEY));
-            if (split.length != 2) {
+        String noFolder = fileName.replace("models/blocks/","");
+        if (noFolder.contains(":")) {
+            String[] split = noFolder.split(Pattern.quote(":"));
+            if(split.length!= 2) {
                 return null;
             }
-            return GameAssetLoader.loadAsset(split[0]+ASSET_KEY+"models/blocks/"+split[1]);
+            return GameAssetLoader.loadAsset(split[0] + ASSET_KEY + "models/blocks/" + split[1]);
         }
         return GameAssetLoader.loadAsset(fileName);
     }

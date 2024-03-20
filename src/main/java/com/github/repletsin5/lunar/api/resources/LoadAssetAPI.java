@@ -1,6 +1,7 @@
 package com.github.repletsin5.lunar.api.resources;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import finalforeach.cosmicreach.GameAssetLoader;
 
 import java.util.ArrayList;
@@ -44,4 +45,5 @@ public class LoadAssetAPI {
     public static String modAssetPath(String modID, String path){
         return modID + ASSET_KEY + path;
     }
+
 }

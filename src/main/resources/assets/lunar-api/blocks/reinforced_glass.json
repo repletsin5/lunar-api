@@ -4,7 +4,7 @@
     {
         "default": 
         {
-            "modelName": "model_glass",
+            "modelName": "lunar-api:model_reinforced_glass",
             "isOpaque": false,
             "isTransparent": true,
             "lightAttenuation": 0,

@@ -1,0 +1,16 @@
+{
+    "parent": "cube",
+
+    "textures":
+    {
+        "all":
+        {
+            "fileName": "lunar-api:reinforced_glass.png"
+        },
+        "slab_side":
+        {
+            "fileName": "glass_slab.png"
+        }
+    }
+    
+}
