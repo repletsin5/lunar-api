@@ -16,13 +16,12 @@ import java.util.Map;
 
 
 public class Lunar implements ClientModInitializer {
-
-    private static boolean gameLoaded =false;
+    private static boolean gameLoaded = false;
     public static Map<String, ConfigScreenFactory<?>> configScreenFactories = new HashMap<>();
     public static List<Map<String, ConfigScreenFactory<?>>> delayedScreenFactoryProviders = new ArrayList<>();
 
     public static GameState getConfigScreen(String modid, GameState menuScreen) {
-        if(!delayedScreenFactoryProviders.isEmpty()) {
+        if (!delayedScreenFactoryProviders.isEmpty()) {
             delayedScreenFactoryProviders.forEach(map -> map.forEach(configScreenFactories::putIfAbsent));
             delayedScreenFactoryProviders.clear();
         }
@@ -31,11 +30,13 @@ public class Lunar implements ClientModInitializer {
         if (factory != null) {
             return factory.create(menuScreen);
         }
+
         return null;
     }
+
     @Override
     public void onInitializeClient() {
-        FabricLoader.getInstance().getEntrypointContainers("modmenu", ModConfigButtonAPI.class).forEach(entrypoint  -> {
+        FabricLoader.getInstance().getEntrypointContainers("modmenu", ModConfigButtonAPI.class).forEach(entrypoint -> {
             ModMetadata metadata = entrypoint.getProvider().getMetadata();
             String modId = metadata.getId();
             try {
@@ -55,7 +56,7 @@ public class Lunar implements ClientModInitializer {
     public static void setGameLoaded() {
         gameLoaded = true;
     }
-    public static boolean HasGameLoaded(){
+    public static boolean hasGameLoaded(){
         return gameLoaded;
     }
 }

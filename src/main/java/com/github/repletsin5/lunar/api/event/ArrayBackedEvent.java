@@ -19,12 +19,14 @@ public class ArrayBackedEvent<T> extends Event<T> {
     ArrayBackedEvent(Class<? super T> type, Function<T[], T> invokerFactory) {
         this.invokerFactory = invokerFactory;
         this.handlers = (T[]) Array.newInstance(type, 0);
-        data=new EventData<>(type);
+        data = new EventData<>(type);
         update();
     }
+
     void update() {
         this.invoker = invokerFactory.apply(handlers);
     }
+
     @Override
     public void register(T listener) {
         Objects.requireNonNull(listener, "Tried to register a null listener!");

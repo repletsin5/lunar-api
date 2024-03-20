@@ -13,16 +13,15 @@ import static com.github.repletsin5.lunar.api.resources.LoadAssetAPI.ASSET_KEY;
 
 @Mixin(GameShader.class)
 public class GameShaderMixin {
-
-    @Redirect(method = "loadShaderFile",at= @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
-    FileHandle loadShaderFromMods(String fileName){
+    @Redirect(method = "loadShaderFile", at = @At(value = "INVOKE", target = "Lfinalforeach/cosmicreach/GameAssetLoader;loadAsset(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;"))
+    FileHandle loadShaderFromMods(String fileName) {
         String noFolder = fileName.replace("shaders/","");
-        if(noFolder.contains(ASSET_KEY)){
-            String[] split =  noFolder.split(Pattern.quote(ASSET_KEY));
-            if(split.length!= 2){
+        if (noFolder.contains(ASSET_KEY)) {
+            String[] split = noFolder.split(Pattern.quote(ASSET_KEY));
+            if(split.length!= 2) {
                 return null;
             }
-            return GameAssetLoader.loadAsset(split[0]+ASSET_KEY+"shader/"+split[1]);
+            return GameAssetLoader.loadAsset(split[0] + ASSET_KEY + "shader/" + split[1]);
         }
         return GameAssetLoader.loadAsset(fileName);
     }

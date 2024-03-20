@@ -16,21 +16,23 @@ import java.util.Map;
 
 @Mixin(BlockSelection.class)
 public class BlockSelectionMixin {
-    @Inject(method = "breakBlock",at=@At("TAIL"),locals = LocalCapture.CAPTURE_FAILHARD)
-    void afterBreakCallback(World world, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci, BlockState blockState, BlockEventTrigger[] triggers, Map args, int i){
-        BlockEvents.AFTER_BLOCK_BREAK.invoker().blockBreak(world,blockPos,timeSinceLastInteract);
-    }
-    @Inject(method = "breakBlock",at=@At("HEAD"),locals = LocalCapture.CAPTURE_FAILHARD)
-    void beforeBreakCallback(World world, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci){
-        BlockEvents.BEFORE_BLOCK_BREAK.invoker().blockBreak(world,blockPos,timeSinceLastInteract);
+    @Inject(method = "breakBlock", at=@At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
+    void afterBreakCallback(World world, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci, BlockState blockState, BlockEventTrigger[] triggers, Map args, int i) {
+        BlockEvents.AFTER_BLOCK_BREAK.invoker().blockBreak(world, blockPos, timeSinceLastInteract);
     }
 
-    @Inject(method = "placeBlock", at=@At("TAIL"),locals = LocalCapture.CAPTURE_FAILHARD)
-    void afterPlaceCallback(World world, BlockState targetBlockState, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci){
-        BlockEvents.BEFORE_BLOCK_PLACE.invoker().blockPlace(world,targetBlockState,blockPos,timeSinceLastInteract);
+    @Inject(method = "breakBlock", at=@At("HEAD"), locals = LocalCapture.CAPTURE_FAILHARD)
+    void beforeBreakCallback(World world, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci) {
+        BlockEvents.BEFORE_BLOCK_BREAK.invoker().blockBreak(world, blockPos, timeSinceLastInteract);
     }
-    @Inject(method = "placeBlock", at=@At("HEAD"),locals = LocalCapture.CAPTURE_FAILHARD)
-    void beforePlaceCallback(World world, BlockState targetBlockState, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci){
-        BlockEvents.AFTER_BLOCK_PLACE.invoker().blockPlace(world,targetBlockState,blockPos,timeSinceLastInteract);
+
+    @Inject(method = "placeBlock", at=@At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
+    void afterPlaceCallback(World world, BlockState targetBlockState, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci) {
+        BlockEvents.BEFORE_BLOCK_PLACE.invoker().blockPlace(world, targetBlockState, blockPos, timeSinceLastInteract);
+    }
+
+    @Inject(method = "placeBlock", at=@At("HEAD"), locals = LocalCapture.CAPTURE_FAILHARD)
+    void beforePlaceCallback(World world, BlockState targetBlockState, BlockPosition blockPos, double timeSinceLastInteract, CallbackInfo ci) {
+        BlockEvents.AFTER_BLOCK_PLACE.invoker().blockPlace(world, targetBlockState, blockPos, timeSinceLastInteract);
     }
 }

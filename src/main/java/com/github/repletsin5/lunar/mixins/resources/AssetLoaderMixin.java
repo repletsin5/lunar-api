@@ -19,7 +19,6 @@ import static com.github.repletsin5.lunar.api.resources.LoadAssetAPI.ASSET_KEY;
 
 @Mixin(finalforeach.cosmicreach.GameAssetLoader.class)
 public class AssetLoaderMixin {
-
     @Shadow @Final public static HashMap<String, FileHandle> ALL_ASSETS;
 
     /**
@@ -27,21 +26,24 @@ public class AssetLoaderMixin {
      * @reason So mods can load assets
      **/
     @Inject(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;",at= @At(value = "INVOKE_ASSIGN", target = "Lcom/badlogic/gdx/Files;absolute(Ljava/lang/String;)Lcom/badlogic/gdx/files/FileHandle;",shift = At.Shift.BEFORE),cancellable = true)
-    private static void file(String fileName, boolean forceReload, CallbackInfoReturnable<FileHandle> cir){
+    private static void file(String fileName, boolean forceReload, CallbackInfoReturnable<FileHandle> cir) {
+        String arr[] = null;
 
-        String arr[]= null;
-        if(fileName.contains(ASSET_KEY)){
+        if (fileName.contains(ASSET_KEY)) {
             arr = fileName.split(Pattern.quote(ASSET_KEY));
         }
-        if(arr!=null){
-            if(arr.length==2){
-                if(arr[0]=="base"){
+
+        if (arr != null) {
+            if (arr.length==2) {
+                if (arr[0] == "base") {
                     if (!forceReload && ALL_ASSETS.containsKey(arr[1]))
                         cir.setReturnValue(ALL_ASSETS.get(arr[1]));
+
                     FileHandle file = Gdx.files.classpath(arr[1]);
                     ALL_ASSETS.put(fileName, file);
                     cir.setReturnValue(file);
                 }
+
                 FileHandle file = Gdx.files.classpath("assets/" + arr[0] + "/" + arr[1]);
                 if (file.exists()) {
                     System.out.println(" from fabric mod");
@@ -51,21 +53,22 @@ public class AssetLoaderMixin {
             }
         }
     }
-    @Redirect(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at= @At(value = "INVOKE", target = "Ljava/io/PrintStream;print(Ljava/lang/String;)V"))
-    private static void printCapture(PrintStream instance, String s){
-        String a= s.replace("Loading ","");
 
-        if(s.contains(ASSET_KEY)){
-               String b=  a.replace(ASSET_KEY,":");
-               s = "Loading "+b;
-            }else{
-                if(s.contains("mods/assets")){
-                    s = "Loading "+ "DataMods:"+a;
-                }else {
-                    s = "Loading "+ "Base:"+a;
-                }
+    @Redirect(method = "loadAsset(Ljava/lang/String;Z)Lcom/badlogic/gdx/files/FileHandle;", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;print(Ljava/lang/String;)V"))
+    private static void printCapture(PrintStream instance, String s) {
+        String a = s.replace("Loading ","");
+
+        if (s.contains(ASSET_KEY)) {
+           String b = a.replace(ASSET_KEY,":");
+           s = "Loading " + b;
+        } else {
+            if (s.contains("mods/assets")) {
+                s = "Loading " + "DataMods:" + a;
+            } else {
+                s = "Loading " + "Base:" + a;
             }
-            instance.print(s);
+        }
 
+        instance.print(s);
     }
 }
