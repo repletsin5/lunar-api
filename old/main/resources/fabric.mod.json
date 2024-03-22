@@ -10,6 +10,12 @@
   "contact": {
     "repo": "https://github.com/repletsin5/lunar-api"
   },
+  "mixins": [
+    "lunar-api.gamestate.mixins.json",
+    "lunar-api.resources.mixins.json",
+    "lunar-api.core.mixins.json",
+    "lunar-api.rendering.mixins.json"
+  ],
   "license": "BSD-3-Clause",
   "icon": "assets/lunartextiles/icon.png",
   "entrypoints": {
@@ -24,19 +30,5 @@
   "depends": {
     "fabricloader": ">=0.15.7",
     "cosmic_reach": ">=0.1.7"
-  },
-  "jars": [
-    {
-      "file": "META-INF/jars/lunar-api-core-0.2.2.jar"
-    },
-    {
-      "file": "META-INF/jars/lunar-api-registry-0.2.2.jar"
-    },
-    {
-      "file": "META-INF/jars/lunar-api-events-0.2.2.jar"
-    },
-    {
-      "file": "META-INF/jars/lunar-api-resources-0.2.2.jar"
-    }
-  ]
+  }
 }

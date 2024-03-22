@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "lunar-api-core",
+  "version": "${version}",
+  "name": "Lunar API Core",
+  "description": "A basic Modding API for Cosmic Reach",
+  "authors": [
+    "repletsin5"
+  ],
+  "contact": {
+    "repo": "https://github.com/repletsin5/lunar-api"
+  },
+  "mixins": [
+
+  ],
+  "license": "BSD-3-Clause",
+  "icon": "assets/lunartextiles/icon.png",
+  "entrypoints": {
+    "client": [
+      "com.github.repletsin5.lunar.core.Lunar"
+    ]
+  },
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.7",
+    "cosmic_reach": ">=0.1.7"
+  }
+}

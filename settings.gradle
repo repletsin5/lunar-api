@@ -11,5 +11,8 @@ pluginManagement {
 }
 
 rootProject.name = 'lunar-api'
-
+include 'lunar-api-core'
+include 'lunar-api-resources'
+include 'lunar-api-registry'
+include 'lunar-api-events'
 

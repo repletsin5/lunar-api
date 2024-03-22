@@ -1,9 +1,9 @@
 package com.github.repletsin5.lunar;
 
 import com.github.repletsin5.lunar.api.modmenu.ConfigScreenFactory;
-import com.github.repletsin5.lunar.api.modmenu.ModConfigButtonAPI;
 import com.google.common.collect.ImmutableMap;
 import finalforeach.cosmicreach.gamestates.OptionsMenu;
+import com.github.repletsin5.lunar.api.modmenu.ModConfigButtonAPI;
 
 import java.util.Map;
 

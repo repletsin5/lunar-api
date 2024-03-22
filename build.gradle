@@ -17,92 +17,109 @@ base {
     archivesName = "$mod_name"
 }
 
-group = "com.github.repletsin5"
-apply plugin: "maven-publish"
-apply plugin: "java-library"
+allprojects{
+	group = "com.github.repletsin5"
+	apply plugin: "maven-publish"
+	apply plugin: "java-library"
 
-repositories {
-    ivy {
-        name "Cosmic Reach"
-        url "https://cosmic-archive.netlify.app/"
-        patternLayout {
-            artifact "/Cosmic Reach-[revision].jar"
-        }
-        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
-        metadataSources {
-            artifact()
-        }
+	repositories {
+		ivy {
+			name "Cosmic Reach"
+			url "https://cosmic-archive.netlify.app/"
+			patternLayout {
+				artifact "/Cosmic Reach-[revision].jar"
+			}
+			// This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+			metadataSources {
+				artifact()
+			}
 
-        content {
-            includeGroup "finalforeach"
-        }
-    }
+			content {
+				includeGroup "finalforeach"
+			}
+		}
 
-    mavenCentral()
-    maven {
-        url 'https://jitpack.io'
-    }
-    maven {
-        url "https://repo.spongepowered.org/maven/"
-    }
-    maven {
-        url "https://maven.fabricmc.net/"
-    }
-    maven {
-        url "https://maven.quiltmc.org/repository/release"
-    }
+		mavenCentral()
+		maven {
+			url 'https://jitpack.io'
+		}
+		maven {
+			url "https://repo.spongepowered.org/maven/"
+		}
+		maven {
+			url "https://maven.fabricmc.net/"
+		}
+		maven {
+			url "https://maven.quiltmc.org/repository/release"
+		}
 
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		it.options.release = 17
+	}
+
+	java {
+		withSourcesJar()
+	}
+	dependencies {
+		compileOnly "finalforeach:cosmicreach:${cosmic_reach_version}"
+		api "net.fabricmc:fabric-loader:${project.loader_version}"
+		api "net.fabricmc:access-widener:2.1.0"
+
+		// Mixin dependencies
+		api "org.ow2.asm:asm:${asm_version}"
+		api "org.ow2.asm:asm-analysis:${asm_version}"
+		api "org.ow2.asm:asm-commons:${asm_version}"
+		api "org.ow2.asm:asm-tree:${asm_version}"
+		api "org.ow2.asm:asm-util:${asm_version}"
+		api("net.fabricmc:sponge-mixin:${mixin_version}") {
+			exclude module: 'launchwrapper'
+			exclude group: 'com.google.guava'
+			exclude group: 'com.google.code.gson'
+		}
+		api 'com.google.guava:guava:33.0.0-jre'
+		api 'com.google.code.gson:gson:2.9.1'
+
+		api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
+	}
+
+	tasks.withType(AbstractArchiveTask).configureEach {
+		preserveFileTimestamps = false
+		reproducibleFileOrder = true
+	}
+
+	processResources {
+		inputs.property "version", project.version
+		inputs.property "loader_version", project.loader_version
+		inputs.property "cosmicreach_version", project.cosmicreach_version
+		inputs.property "mod_name", project.mod_name
+		inputs.property "modid", project.modid
+		filteringCharset "UTF-8"
+
+		filesMatching("fabric.mod.json") {
+			expand "version": project.version,
+					"loader_version": project.loader_version
+		}
+	}
+	tasks.register('buildAndCopy', Copy) {
+		group 'build'
+		dependsOn 'assemble'
+		from "build/libs/"
+		exclude( '*-sources.jar')
+		include( '*.jar')
+		into "${project.findProject(':').projectDir}/run/mods"
+	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
+task getFiles(type: Copy) {
+	group 'build'
+	dependsOn 'assemble'
+	from "run/mods"
+	include( 'lunar-api-*')
+	exclude('Lunar API-*')
+	into "${project.findProject(':').projectDir}/src/main/resources/META-INF/jars"
 }
-
-java {
-    withSourcesJar()
-}
-
-dependencies {
-    compileOnly "finalforeach:cosmicreach:${cosmic_reach_version}"
-    api "net.fabricmc:fabric-loader:${project.loader_version}"
-    api "net.fabricmc:access-widener:2.1.0"
-
-    // Mixin dependencies
-    api "org.ow2.asm:asm:${asm_version}"
-    api "org.ow2.asm:asm-analysis:${asm_version}"
-    api "org.ow2.asm:asm-commons:${asm_version}"
-    api "org.ow2.asm:asm-tree:${asm_version}"
-    api "org.ow2.asm:asm-util:${asm_version}"
-    api("net.fabricmc:sponge-mixin:${mixin_version}") {
-        exclude module: 'launchwrapper'
-        exclude group: 'com.google.guava'
-        exclude group: 'com.google.code.gson'
-    }
-    api 'com.google.guava:guava:33.0.0-jre'
-    api 'com.google.code.gson:gson:2.9.1'
-
-    api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
-}
-
-tasks.withType(AbstractArchiveTask).configureEach {
-    preserveFileTimestamps = false
-    reproducibleFileOrder = true
-}
-
-processResources {
-    inputs.property "version", project.version
-    inputs.property "loader_version", project.loader_version
-    inputs.property "cosmicreach_version", project.cosmicreach_version
-    inputs.property "mod_name", project.mod_name
-    inputs.property "modid", project.modid
-    filteringCharset "UTF-8"
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version,
-                "loader_version": project.loader_version
-    }
-}
-
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly
@@ -112,14 +129,6 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release = 17
 }
 
-tasks.register('buildAndCopy', Copy) {
-    group 'build'
-    dependsOn 'assemble'
-    from "build/libs/"
-    exclude( '*-sources.jar')
-    include( '*.jar')
-    into "run/mods"
-}
 
 tasks.register('downloadModLoader', Download) {
     group 'fabric'
@@ -184,7 +193,9 @@ publishing {
     }
 }
 
+jar {
 
+}
 javadoc {
     if(JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
@@ -196,3 +207,4 @@ signing {
     sign publishing.publications
 }
  */
+

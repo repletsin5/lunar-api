@@ -1,0 +1,11 @@
+
+group = 'com.github.repletsin5.lunar'
+version = '0.2.2'
+
+
+
+dependencies {
+    api project(":lunar-api-core")
+    api project(":lunar-api-resources")
+}
+

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "lunar-api-resources",
+  "version": "${version}",
+  "name": "Lunar API Resources",
+  "description": "A basic Modding API for Cosmic Reach",
+  "authors": [
+    "repletsin5"
+  ],
+  "contact": {
+    "repo": "https://github.com/repletsin5/lunar-api"
+  },
+  "mixins": [
+    "lunar-api-resources.resources.mixins.json",
+    "lunar-api-resources.rendering.mixins.json"
+  ],
+  "license": "BSD-3-Clause",
+  "icon": "assets/lunar/icon.png",
+  "entrypoints": {
+
+  },
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.7",
+    "cosmic_reach": ">=0.1.7"
+  }
+}
