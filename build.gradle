@@ -22,6 +22,22 @@ apply plugin: "maven-publish"
 apply plugin: "java-library"
 
 repositories {
+    ivy {
+        name "Cosmic Reach"
+        url "https://cosmic-archive.netlify.app/"
+        patternLayout {
+            artifact "/Cosmic Reach-[revision].jar"
+        }
+        // This is required in Gradle 6.0+ as metadata file (ivy.xml) is mandatory
+        metadataSources {
+            artifact()
+        }
+
+        content {
+            includeGroup "finalforeach"
+        }
+    }
+
     mavenCentral()
     maven {
         url 'https://jitpack.io'
@@ -31,6 +47,9 @@ repositories {
     }
     maven {
         url "https://maven.fabricmc.net/"
+    }
+    maven {
+        url "https://maven.quiltmc.org/repository/release"
     }
 }
 
@@ -43,8 +62,7 @@ java {
 }
 
 dependencies {
-    implementation fileTree(dir: "${project(":").projectDir}/run/", include: ['*.jar'])
-    implementation fileTree(dir: "${project(":").projectDir}/run/deps", include: ['*.jar'])
+    compileOnly "finalforeach:cosmicreach:${cosmic_reach_version}"
     api "net.fabricmc:fabric-loader:${project.loader_version}"
     api "net.fabricmc:access-widener:2.1.0"
 
@@ -59,6 +77,9 @@ dependencies {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.code.gson'
     }
+    api 'com.google.guava:guava:33.0.0-jre'
+    api 'com.google.code.gson:gson:2.9.1'
+
     api annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")
 }
 
@@ -159,8 +180,7 @@ publishing {
 
             repositories {
                 maven {
-                    name = "ossrh"
-                    url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                    url = 'mavenPublish'
                 }
             }
         }
