@@ -51,6 +51,7 @@ repositories {
     maven {
         url "https://maven.quiltmc.org/repository/release"
     }
+
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -178,11 +179,6 @@ publishing {
                 }
             }
 
-            repositories {
-                maven {
-                    url = 'mavenPublish'
-                }
-            }
         }
 
     }
