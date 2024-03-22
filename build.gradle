@@ -190,8 +190,9 @@ javadoc {
         options.addBooleanOption('html5', true)
     }
 }
-
+/*
 signing {
     useGpgCmd()
     sign publishing.publications
 }
+ */
