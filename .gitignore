@@ -5,3 +5,4 @@ run/*
 mavenPublish/
 .idea/*
 !.idea/runConfigurations/
+src/main/resources/META-INF/jars/
