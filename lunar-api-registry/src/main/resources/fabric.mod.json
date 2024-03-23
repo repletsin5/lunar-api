@@ -20,6 +20,8 @@
   },
   "environment": "*",
   "depends": {
+    "lunar-api-core": ">=0.2.2",
+    "lunar-api-resources": ">=0.2.2",
     "fabricloader": ">=0.15.7",
     "cosmic_reach": ">=0.1.7"
   }
