@@ -73,8 +73,8 @@ public class ModMenuState extends GameState {
         }
     }
 
-    public void render() {
-        super.render();
+    public void render(float partTick) {
+        super.render(partTick);
         ScreenUtils.clear(0.145F, 0.078F, 0.153F, 1.0F, true);
         Gdx.gl.glEnable(2929);
         Gdx.gl.glDepthFunc(513);
