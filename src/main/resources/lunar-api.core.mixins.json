@@ -6,7 +6,8 @@
   "mixins": [
     "BlockGameMixin",
     "BlockSelectionMixin",
-    "BlockModelJsonMixin"
+    "BlockModelJsonMixin",
+    "BlockAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

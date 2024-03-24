@@ -92,7 +92,7 @@ tasks.withType(AbstractArchiveTask).configureEach {
 processResources {
     inputs.property "version", project.version
     inputs.property "loader_version", project.loader_version
-    inputs.property "cosmicreach_version", project.cosmicreach_version
+    inputs.property "cosmicreach_version", project.cosmic_reach_version
     inputs.property "mod_name", project.mod_name
     inputs.property "modid", project.modid
     filteringCharset "UTF-8"

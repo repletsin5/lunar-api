@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.github.repletsin5.lunar.Lunar;
+//import com.github.repletsin5.lunar.api.ui.CustomFontRenderer;
 import com.github.repletsin5.lunar.mixins.gamestate.UIElementAccessor;
 import finalforeach.cosmicreach.gamestates.GameState;
 import finalforeach.cosmicreach.ui.FontRenderer;
@@ -73,8 +74,8 @@ public class ModMenuState extends GameState {
         }
     }
 
-    public void render() {
-        super.render();
+    public void render(float partTick) {
+        super.render(partTick);
         ScreenUtils.clear(0.145F, 0.078F, 0.153F, 1.0F, true);
         Gdx.gl.glEnable(2929);
         Gdx.gl.glDepthFunc(513);
@@ -90,6 +91,8 @@ public class ModMenuState extends GameState {
         Vector2 pos = new Vector2();
         batch.setProjectionMatrix(this.uiCamera.combined);
         batch.begin();
+
+        //CustomFontRenderer.drawText(batch,"Test text for font renderer",50,50);
         for (var mod : FabricLoader.getInstance().getAllMods()) {
             if (mod.getMetadata().getId() == selectedID) {
                 yStart += pos.y + 4.0F;

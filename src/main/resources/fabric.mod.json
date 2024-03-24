@@ -17,7 +17,7 @@
     "lunar-api.rendering.mixins.json"
   ],
   "license": "BSD-3-Clause",
-  "icon": "assets/lunartextiles/icon.png",
+  "icon": "assets/lunar-api/icon.png",
   "entrypoints": {
     "client": [
       "com.github.repletsin5.lunar.Lunar"
@@ -29,6 +29,6 @@
   "environment": "*",
   "depends": {
     "fabricloader": ">=0.15.7",
-    "cosmic_reach": ">=0.1.7"
+    "cosmic_reach": ">=0.1.13"
   }
 }

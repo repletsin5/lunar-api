@@ -46,7 +46,7 @@ public class Lunar implements ClientModInitializer {
                 configScreenFactories.put(modId, api.getModConfigScreenFactory());
                 delayedScreenFactoryProviders.add(api.getProvidedConfigScreenFactories());
             } catch (Throwable e) {
-                Log.error(LogCategory.LOG,"Mod {} provides a broken implementation of ModMenuApi", modId, e);
+                Log.error(LogCategory.LOG,"Mod %s provides a broken implementation of ModMenuApi", modId, e);
             }
         });
         //BlocksRegistry.register("lunar-api","Reinforced Glass",new ModBlock());

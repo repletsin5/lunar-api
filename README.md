@@ -23,3 +23,4 @@ This is an api mod for the Cosmic Reach game based on Fabric Mod Loader.
 - KaboomRoads for making MixinExtras work and fixing a lot of stuff
 - The fabric team for the inspiration and some code.
 - TerraformersMC for ModMenu
+- CooGI for the quilt example mod(took same build.gradle config)

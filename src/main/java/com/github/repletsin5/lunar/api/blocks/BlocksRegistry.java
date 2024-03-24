@@ -3,6 +3,7 @@ package com.github.repletsin5.lunar.api.blocks;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.github.repletsin5.lunar.mixins.core.BlockAccessor;
 import finalforeach.cosmicreach.world.blocks.Block;
 import finalforeach.cosmicreach.world.blocks.BlockState;
 import com.github.repletsin5.lunar.api.resources.LoadAssetAPI;
@@ -64,7 +65,7 @@ public class BlocksRegistry {
             blockState.initialize(b);
             blockState.stringId = stateKey;
             if (blockState.generateSlabs) {
-                //generateSlabs(blockState.stringId, blockState);
+                BlockAccessor.invokeGenerateSlabs(blockState.stringId, blockState);
             }
         }
         return b;
@@ -82,7 +83,7 @@ public class BlocksRegistry {
             blockState.initialize(b);
             blockState.stringId = stateKey;
             if (blockState.generateSlabs) {
-                //generateSlabs(blockState.stringId, blockState);
+                BlockAccessor.invokeGenerateSlabs(blockState.stringId, blockState);
             }
         }
         return b;
