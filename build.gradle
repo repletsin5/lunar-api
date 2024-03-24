@@ -63,8 +63,8 @@ java {
 }
 
 dependencies {
-    runtimeOnly fileTree('run/cosmic-reach.jar')
-    //runtimeOnly fileTree(dir: 'run/deps', include: ['*.jar'])
+    implementation fileTree(dir: 'run/', include: ['*.jar'])
+    implementation fileTree(dir: 'run/deps', include: ['*.jar'])
     compileOnly "finalforeach:cosmicreach:${cosmicreach_version}"
     api "net.fabricmc:fabric-loader:${project.loader_version}"
     api "net.fabricmc:access-widener:2.1.0"
