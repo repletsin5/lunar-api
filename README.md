@@ -1,4 +1,4 @@
-# Lunar API
+# Lunar API [Merged with [Flux API](https://github.com/CRModders/FluxAPI)]
 
 This is an api mod for the Cosmic Reach game based on Fabric Mod Loader.
 
